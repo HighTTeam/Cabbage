@@ -5,10 +5,34 @@
  * Learn how to create Gradle builds at https://guides.gradle.org/creating-new-gradle-builds/
  */
 
-apply plugin: 'java'
+plugins {
+    id 'java'
+    id 'scala'
+    id 'idea'
+    id 'eclipse'
+    id 'maven'
+}
 
-repositories {
-    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-    mavenLocal()
-    mavenCentral()
+version = 1.0
+
+dependencies {
+    implementation "org.scala-lang:scala-library:${scalaVersion}"
+    implementation "org.scala-lang:scala-compiler:${scalaVersion}"
+    implementation "org.scala-lang:scala-reflect:${scalaVersion}"
+    testImplementation "org.scalatest:scalatest_2.11:3.0.0"
+    testImplementation "junit:junit:${junitVersion}"
+}
+
+allprojects {
+
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        jcenter()
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+subprojects {
+
 }

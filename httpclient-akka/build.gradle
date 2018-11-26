@@ -1,0 +1,41 @@
+apply plugin: 'java'
+apply plugin: 'scala'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+/**
+ *  implementation:
+ *  gradle升级到3.0之后,新增了implementation, 而compile 方式被标记为了deprecated,
+ *  compile 在3.0之后仍然可以使用,但是 gradle 官方说会在 gradle 后续的某次重要升级后变为不可用.
+ *
+ *  如果我们使用了implementation方式来依赖项目的话,
+ *  那么这个库就在编译时期,只对当前的module可见,对其他的module不可见,但是在运行使其是可见的,这种方式的好处是可以显著减少
+ *  build项目的时间,因为假如该依赖库有接口或者代码变动,那么Gradle只会去重新编译和它有直接依赖关系的module,也就是该库不存在传递性
+ *
+ *  api
+ *  使用api方式来依赖项目或者库的话,那么这个库,在编译时期和运行时期都可以对其他module可见
+ *
+ *
+ *  compileOnly
+ *  3.0之后版本,使用compileOnly来替代provided
+ *  假如在项目中,对某些库你只是想要在编译时期使用,而在运行时期并不需要这个库,你可以使用这种方式!
+ *
+ *  runtimeOnly
+ *  3.0之后,使用 runtinmeOnly来替代apk
+ *  Gradle 在运行时会将该库添加到 build 的 output 中去
+ *
+ */
+dependencies {
+    implementation "com.typesafe.akka:akka-http_2.12:${akkaVersion}"
+    implementation "com.typesafe.akka:akka-stream_2.12:${akkaStreamVersion}"
+    compileOnly "org.scala-lang:scala-library:${scalaVersion}"
+    compileOnly "org.scala-lang:scala-compiler:${scalaVersion}"
+    compileOnly "org.scala-lang:scala-reflect:${scalaVersion}"
+    testImplementation "org.scalatest:scalatest_2.11:3.0.0"
+    testImplementation "junit:junit:${junitVersion}"
+}

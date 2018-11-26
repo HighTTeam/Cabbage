@@ -9,5 +9,5 @@
 
 rootProject.name = 'cabbage'
 
-include "httpclient-akka-http"
-include "httpclient-netty"
+include 'httpclient-netty','httpclient-akka'
+
